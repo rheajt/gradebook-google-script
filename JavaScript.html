@@ -1,0 +1,39 @@
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>
+
+$('#search').click(function() {
+  // find out what student number the user typed
+  var userInput = $('input[name=textBox]').val();
+  
+  $(function() {
+    // Call the server here to retrieve any information needed to build the page.
+    google.script.run
+       .withSuccessHandler(function(studentData) {
+            // Respond to success conditions here.
+            updateDisplay(studentData);
+          })
+       .withFailureHandler(function() {
+            // Respond to failure conditions here.
+            $('#error-message').show();
+          })
+       .getData(userInput);
+  });
+});
+
+function updateDisplay(studentData) {
+  var headingText = "<h1><B>Displaying the grades for " + studentData.name + "</B></h1>";
+  $('#content').fadeOut('slow', function() {
+    $('#content').empty();
+  });
+
+  $(headingText).appendTo('#content');
+  $('<h2><B>Student Number:</B> '+studentData.number+'</h2>').appendTo('#content');
+  for (i = 0; i < studentData.grades.length; i++) {
+    
+    $('<h2><B>'+studentData.grades[i][0]+':</B>    '+studentData.grades[i][1]+'</h2>').appendTo('#content');
+  }
+  $('#content').fadeIn('slow');
+}
+
+
+</script>
