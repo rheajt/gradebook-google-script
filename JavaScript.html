@@ -22,17 +22,17 @@ $('#search').click(function() {
 
 function updateDisplay(studentData) {
   var headingText = "<h1><B>Displaying the grades for " + studentData.name + "</B></h1>";
+  
   $('#content').fadeOut('slow', function() {
-    $('#content').empty();
+    $(this).empty();
+    $(headingText).appendTo('#content');
+    $('<h2><B>Student Number:</B> '+studentData.number+'</h2>').appendTo('#content');
+    for (i = 0; i < studentData.grades.length; i++) {
+      
+      $('<h2><B>'+studentData.grades[i][0]+':</B>    '+studentData.grades[i][1]+'</h2>').appendTo('#content');
+    }
+    $('#content').fadeIn('slow');
   });
-
-  $(headingText).appendTo('#content');
-  $('<h2><B>Student Number:</B> '+studentData.number+'</h2>').appendTo('#content');
-  for (i = 0; i < studentData.grades.length; i++) {
-    
-    $('<h2><B>'+studentData.grades[i][0]+':</B>    '+studentData.grades[i][1]+'</h2>').appendTo('#content');
-  }
-  $('#content').fadeIn('slow');
 }
 
 
